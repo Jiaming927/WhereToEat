@@ -1,6 +1,10 @@
 <?php
+	$re = file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']);
+	$geo = unserialize($re);
+	$latitude = $geo['geoplugin_latitude'];
+	$longitude = $geo['geoplugin_longitude'];
 	require_once ('OAuth.php');
-	$unsigned_url = "http://api.yelp.com/v2/search?term=food&ll=47.653555,-122.3062295&radius_filter=2000";
+	$unsigned_url = "http://api.yelp.com/v2/search?term=food&ll=$latitude,$longitude&radius_filter=2000";
 	$consumer_key = "";
 	$consumer_secret = "";
 	$token = "";
