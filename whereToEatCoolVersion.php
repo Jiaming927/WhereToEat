@@ -40,7 +40,7 @@
 
 	<body>
 		<h1> The almighty oracle says you should eat <span><?= $result ?></span> </h1>
-		<h1> <?= $response["businesses"][$index]["distance"]?> meters away from you</h1>
+		<h1> <?= (int)$response["businesses"][$index]["distance"]?> meters away from you</h1>
 		<h1> At <span><?= $response["businesses"][$index]["location"]["display_address"][0] ?></span> </h1>
 	</body>
 </html>
