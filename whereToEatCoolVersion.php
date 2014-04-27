@@ -1,4 +1,8 @@
 <?php
+	#Jiaming Li
+	#A simple page that I created to play with Yelp's api and 
+	#Uses Geoplugin's ip address database to find the user's location(not so accurate but the best I can do)
+	#Uses Yelp's api to get data about places to eat nearby
 	$re = file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']);
 	$geo = unserialize($re);
 	$latitude = "47.653555";
