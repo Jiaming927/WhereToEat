@@ -5,12 +5,15 @@
 	#Uses Yelp's api to get data about places to eat nearby
 	$re = file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']);
 	$geo = unserialize($re);
+	# Set default latitude and longitude
 	$latitude = "47.653555";
 	$longitude = "-122.3062295";
+	# If the data return from geoplugin is good, then update latitude and longitude
 	if (intval($geo['geoplugin_status']) == 200) {
 		$latitude = $geo['geoplugin_latitude'];
 		$longitude = $geo['geoplugin_longitude'];
 	}
+	# Set up OAuth stuffs
 	require_once ('OAuth.php');
 	$unsigned_url = "http://api.yelp.com/v2/search?term=food&ll=$latitude,$longitude&radius_filter=2000";
 	$consumer_key = "";
