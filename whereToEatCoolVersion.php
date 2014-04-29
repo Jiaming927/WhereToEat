@@ -31,11 +31,17 @@
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	$data = curl_exec($ch); // Yelp response
 	curl_close($ch);
+	# Take the response, decode it
 	$response = json_decode($data, true);
-	$index = rand(0, $response["total"] - 1);	
+	# Get one from the list randomly
+	$index = rand(0, $response["total"] - 1);
+	# For some reason the list is messed up, i.e I get 300 from the "total" field, if I 
+	# trust this entirely, I may get weird error ( some index inside that 300 are not there )
+	# So I need to check if it's there, if it's not, take another random number.
 	while (!isset($response["businesses"][$index])) {
 		$index = rand(0, $response["total"] - 1);
 	}
+	# ALL SET
 	$result = $response["businesses"][$index]["name"];
 ?>
 <!Doctype html>
