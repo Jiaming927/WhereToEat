@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>WHERE TO EAT</title>
+        <style type="text/css">
+        /*body {
+            background-color: black;
+        }*/
+
+        h1 {
+            /*color: yellow;*/
+            font-size: 30pt;
+            font-family: verdana;
+            text-align: center;
+            margin-top: 30%;
+        }
+        </style>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var position;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var socket = io();
+                    var geo = position.coords.latitude + "," + position.coords.longitude;
+                    socket.emit('coordinate', geo);
+                    socket.on('place', function(msg) {
+                        document.getElementById("result").textContent = msg;
+                    });
+                });
+            } else {
+                document.getElementById("result").textContent = "Geolocation is not supported, please enable it.";
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1 id="result"> Wait for it..</h1>
+    </body>
+</html>
