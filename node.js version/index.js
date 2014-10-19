@@ -9,15 +9,14 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
 	socket.on('coordinate', function(msg) {
 		var yelp = require("yelp").createClient({
-			
 		});
 
 		// See http://www.yelp.com/developers/documentation/v2/search_api
-		yelp.search({term: "food", limit: "20", ll:msg, radius_filter:1000}, function(error, data) {
+		yelp.search({term: "food", sort: "2", limit: "20", ll:msg, radius_filter:1000}, function(error, data) {
 			console.log(error);
-			console.log(data['businesses'][3]);
+			draw(data);
 		});
-		io.emit('place', msg);
+		
 	})
 });
 
@@ -26,6 +25,14 @@ http.listen(3000, function() {
 });
 
 // Function to draw stuffs
-function draw() {
+function draw(data) {
+	var count = Math.min(20, data['total']);
+	var res = Math.floor(count * Math.random());
+	console.log(data['businesses'][res]);
+	io.emit('place', data['businesses'][res]['name']);
+}
 
+// Function to hash coordinates
+function hashCoor(altitude, longitude) {
+	
 }
